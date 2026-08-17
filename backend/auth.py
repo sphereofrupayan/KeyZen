@@ -90,25 +90,46 @@ def register():
 @auth_bp.route("/login", methods=["POST"])
 def login():
     data = request.get_json(silent=True) or {}
+
     email = (data.get("email") or "").strip().lower()
     password = data.get("password") or ""
 
+    print(f"[LOGIN] Email received: {email}")
+    print(f"[LOGIN] Password length: {len(password)}")
+
     user = User.query.filter_by(email=email).first()
 
-    # Deliberately vague error: don't reveal whether the email exists.
-    if not user or not verify_password(password, user.password_hash):
+    if not user:
+        print("[LOGIN] USER NOT FOUND")
         return jsonify({"error": "Invalid email or password"}), 401
 
-    # First factor passed. Issue an OTP and hold the login in a
-    # "pending" state until /api/otp/verify succeeds.
+    print(f"[LOGIN] User found: {user.email}")
+    print(f"[LOGIN] Stored hash exists: {bool(user.password_hash)}")
+
+    try:
+        password_ok = verify_password(password, user.password_hash)
+    except Exception as e:
+        print(f"[LOGIN] PASSWORD CHECK ERROR: {type(e).__name__}: {e}")
+        return jsonify({"error": "Password verification failed"}), 500
+
+    print(f"[LOGIN] Password correct: {password_ok}")
+
+    if not password_ok:
+        return jsonify({"error": "Invalid email or password"}), 401
+
     session.clear()
     session["pending_user_id"] = user.id
 
-    issue_otp_for_user(user)
+    try:
+        issue_otp_for_user(user)
+        print("[LOGIN] OTP issued successfully")
+    except Exception as e:
+        print(f"[OTP ERROR] {type(e).__name__}: {e}")
+        return jsonify({"error": "Could not send OTP"}), 500
 
     return jsonify({
         "message": "Password verified. Enter the one-time code sent to your email.",
-        "otp_required": True,
+        "otp_required": True
     }), 200
 
 

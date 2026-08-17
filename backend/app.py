@@ -50,7 +50,7 @@ def create_app():
     # treats it as a different origin. supports_credentials=True lets
     # the session cookie travel with fetch() requests that use
     # `credentials: "include"`.
-    frontend_origin = os.environ.get("FRONTEND_ORIGIN", "http://localhost:5500")
+    frontend_origin = os.environ.get("FRONTEND_ORIGIN", "https://heartfelt-kheer-71b9ae.netlify.app")
     CORS(app, supports_credentials=True, origins=[frontend_origin])
 
     # ---- database ----

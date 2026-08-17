@@ -55,15 +55,15 @@ def create_app():
     "https://heartfelt-kheer-71b9ae.netlify.app"
 )
 
-CORS(
-    app,
-    supports_credentials=True,
-    resources={
-        r"/api/*": {
-            "origins": [frontend_origin]
+    CORS(
+        app,
+        supports_credentials=True,
+        resources={
+            r"/api/*": {
+                "origins": [frontend_origin]
+            }
         }
-    }
-)
+    )   
 
     # ---- database ----
     init_db(app)

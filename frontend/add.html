@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Add entry — KeyZen</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      </span>
+      KeyZen
+    </div>
+
+    <a href="dashboard.html" class="side-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg>
+      All entries
+    </a>
+    <a href="add.html" class="side-link active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>
+      Add entry
+    </a>
+    <a href="#" class="side-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      Security audit
+    </a>
+
+    <div class="side-section-label">Tags</div>
+    <a href="#" class="side-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> Work</a>
+    <a href="#" class="side-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg> Personal</a>
+    <a href="#" class="side-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg> Finance</a>
+
+    <div class="sidebar-footer">
+      <div class="vault-status">
+        <span class="status-dot"></span>
+        VAULT LOCKED ON IDLE
+      </div>
+      <a href="login.html" class="side-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        Lock vault
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main-content">
+
+    <div class="page-head">
+      <div>
+        <button class="nav-toggle" aria-label="Toggle menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+        <h1 data-cipher>Add a new entry</h1>
+        <p class="text-secondary">Encrypted locally before it ever reaches the server</p>
+      </div>
+      <a href="dashboard.html" class="btn btn-ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to vault
+      </a>
+    </div>
+
+    <div class="form-shell">
+      <div class="panel form-panel">
+
+        <form id="add-form">
+
+          <div class="form-section-title">Site details</div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="site-name">Site or app name</label>
+              <input class="input" type="text" id="site-name" placeholder="e.g. GitHub" required />
+            </div>
+            <div class="field">
+              <label for="site-url">Website URL</label>
+              <input class="input" type="url" id="site-url" placeholder="https://github.com" />
+            </div>
+          </div>
+
+          <div class="form-section-title">Credentials</div>
+
+          <div class="field">
+            <label for="site-username">Username or email</label>
+            <input class="input" type="text" id="site-username" placeholder="you@domain.com" required autocomplete="off" />
+          </div>
+
+          <div class="field">
+            <label for="site-password">
+              Password
+              <span class="hint">generated client-side, never logged</span>
+            </label>
+            <div class="input-wrap">
+              <input class="input mono-input" type="password" id="site-password" placeholder="Enter or generate a password" required data-strength-input="add" autocomplete="new-password" />
+              <button type="button" class="input-action" data-toggle-visibility="site-password" aria-label="Show password">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <div class="strength-meter" data-strength-meter="add">
+              <div class="strength-bar"></div><div class="strength-bar"></div><div class="strength-bar"></div><div class="strength-bar"></div>
+            </div>
+            <span class="strength-label" data-strength-label="add">Enter a password to check its strength</span>
+          </div>
+
+          <!-- Generator -->
+          <div class="generator-bar">
+            <div class="slider-wrap">
+              <span class="mono text-tertiary" style="font-size:12px;">LENGTH</span>
+              <input type="range" min="8" max="32" value="16" data-gen-length />
+              <span class="length-value mono" data-gen-length-value>16</span>
+            </div>
+            <button type="button" class="btn btn-ghost btn-sm" data-generate-password="site-password">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12a8 8 0 1 0 16 0 8 8 0 0 0-16 0z"/><path d="M12 8v4l3 2"/></svg>
+              Generate
+            </button>
+          </div>
+          <div class="toggle-row" style="margin-bottom:22px;">
+            <label class="checkbox-row"><input type="checkbox" checked data-gen-upper /> Uppercase</label>
+            <label class="checkbox-row"><input type="checkbox" checked data-gen-numbers /> Numbers</label>
+            <label class="checkbox-row"><input type="checkbox" checked data-gen-symbols /> Symbols</label>
+          </div>
+
+          <div class="form-section-title">Organize</div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="site-tag">Tag</label>
+              <select class="input" id="site-tag">
+                <option>Work</option>
+                <option>Personal</option>
+                <option>Finance</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="site-notes">Notes <span class="hint">optional</span></label>
+              <input class="input" type="text" id="site-notes" placeholder="Recovery email, security question, etc." />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              Encrypt &amp; save
+            </button>
+            <a href="dashboard.html" class="btn btn-ghost">Cancel</a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

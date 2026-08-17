@@ -52,22 +52,29 @@ def _send_email(to_address: str, code: str):
     sender = os.environ.get("SMTP_FROM", user or "no-reply@ciphervault.local")
 
     if not (host and user and password):
-        # Dev fallback — no SMTP configured yet.
         print(f"[DEV OTP] Code for {to_address}: {code} (expires in 5 minutes)")
         return
 
-    message = MIMEText(
-        f"Your CipherVault verification code is {code}.\n"
-        f"It expires in 5 minutes. If you didn't request this, ignore this email."
-    )
-    message["Subject"] = "Your CipherVault verification code"
-    message["From"] = sender
-    message["To"] = to_address
+    try:
+        message = MIMEText(
+            f"Your CipherVault verification code is {code}.\n"
+            f"It expires in 5 minutes. If you didn't request this, ignore this email."
+        )
 
-    with smtplib.SMTP(host, port) as server:
-        server.starttls()
-        server.login(user, password)
-        server.sendmail(sender, [to_address], message.as_string())
+        message["Subject"] = "Your CipherVault verification code"
+        message["From"] = sender
+        message["To"] = to_address
+
+        with smtplib.SMTP(host, port) as server:
+            server.starttls()
+            server.login(user, password)
+            server.sendmail(sender, [to_address], message.as_string())
+
+        print(f"[OTP] Email successfully sent to {to_address}")
+
+    except Exception as e:
+        print(f"[OTP EMAIL ERROR] {type(e).__name__}: {e}")
+        raise
 
 
 def issue_otp_for_user(user: User) -> None:

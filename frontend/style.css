@@ -2015,3 +2015,15 @@ body.page-revealed .apple-footer { animation-delay: 0.3s; }
     transition: none !important;
   }
 }
+
+/* Fix page visibility */
+body {
+    opacity: 1 !important;
+}
+
+.navbar,
+main.container,
+.apple-footer {
+    opacity: 1 !important;
+    transform: none !important;
+}

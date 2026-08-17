@@ -6,7 +6,7 @@
    session cookie survives across requests.
    ============================================================ */
 
-const API = 'http://localhost:5000';
+const API = 'https://keyzen-mcbu.onrender.com';
 const CIPHER_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*01';
 
 /* ---------- Cipher scramble reveal ---------- */

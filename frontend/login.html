@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign in — KeyZen</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      </span>
+      KeyZen
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#security">Security</a>
+    </div>
+  </div>
+</nav>
+
+<div class="auth-shell">
+  <div class="panel panel-raised auth-card">
+
+    <div class="auth-head">
+      <div class="vault-dial">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      </div>
+      <h1 data-cipher>Unlock your vault</h1>
+      <p>Enter your credentials to access your saved passwords</p>
+    </div>
+
+    <div class="tab-switch">
+      <button type="button" data-auth-tab="signin" class="active">Sign in</button>
+      <button type="button" data-auth-tab="signup">Create account</button>
+    </div>
+
+    <!-- ===== Sign in panel ===== -->
+    <div data-auth-panel="signin">
+      <form id="login-form">
+        <div class="field">
+          <label for="login-email">Email address</label>
+          <div class="input-wrap">
+            <input class="input" type="email" id="login-email" placeholder="you@domain.com" required autocomplete="email" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="login-password">
+            Master password
+            <a href="#" class="hint" id="forgot-link" style="color:var(--accent); text-decoration:none;">Forgot?</a>
+          </label>
+          <div class="input-wrap">
+            <input class="input" type="password" id="login-password" placeholder="Enter your master password" required autocomplete="current-password" />
+            <button type="button" class="input-action" data-toggle-visibility="login-password" aria-label="Show password">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <label class="checkbox-row" style="margin-bottom:22px;">
+          <input type="checkbox" id="remember-device" />
+          Remember this device for 30 days
+        </label>
+
+        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+      </form>
+
+      <div class="security-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg>
+        <span>After signing in, we'll send a one-time passcode to confirm it's really you.</span>
+      </div>
+    </div>
+
+    <!-- ===== Sign up panel ===== -->
+    <div data-auth-panel="signup" style="display:none;">
+      <form id="signup-form">
+        <div class="field-row">
+          <div class="field">
+            <label for="signup-name">Full name</label>
+            <input class="input" type="text" id="signup-name" placeholder="Rupayan" required autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="signup-email">Email address</label>
+            <input class="input" type="email" id="signup-email" placeholder="you@domain.com" required autocomplete="email" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="signup-password">Master password</label>
+          <div class="input-wrap">
+            <input class="input" type="password" id="signup-password" placeholder="Choose a strong master password" required autocomplete="new-password" data-strength-input="signup" />
+            <button type="button" class="input-action" data-toggle-visibility="signup-password" aria-label="Show password">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="strength-meter" data-strength-meter="signup">
+            <div class="strength-bar"></div><div class="strength-bar"></div><div class="strength-bar"></div><div class="strength-bar"></div>
+          </div>
+          <span class="strength-label" data-strength-label="signup">Enter a password to check its strength</span>
+        </div>
+
+        <div class="field">
+          <label for="signup-confirm">Confirm master password</label>
+          <input class="input" type="password" id="signup-confirm" placeholder="Re-enter your master password" required autocomplete="new-password" />
+        </div>
+
+        <div class="security-note" style="margin-top:0; margin-bottom:22px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
+          <span>This password can't be recovered if lost — it's the only key to your encrypted vault.</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Create vault</button>
+      </form>
+    </div>
+
+    <div class="auth-divider">SECURED SESSION</div>
+
+    <!-- ===== OTP verification ===== -->
+    <details style="margin-top:2px;" id="otp-section">
+      <summary style="cursor:pointer; font-size:13px; color:var(--text-tertiary); font-family:var(--font-mono);">Have a one-time code already? Verify here</summary>
+      <div style="margin-top:18px;">
+        <p class="text-secondary" style="font-size:13px; text-align:center; margin-bottom:16px;">Enter the 6-digit code sent to your email</p>
+        <div class="otp-group" style="margin-bottom:18px;">
+          <input class="input" maxlength="1" inputmode="numeric" data-otp-digit />
+          <input class="input" maxlength="1" inputmode="numeric" data-otp-digit />
+          <input class="input" maxlength="1" inputmode="numeric" data-otp-digit />
+          <input class="input" maxlength="1" inputmode="numeric" data-otp-digit />
+          <input class="input" maxlength="1" inputmode="numeric" data-otp-digit />
+          <input class="input" maxlength="1" inputmode="numeric" data-otp-digit />
+        </div>
+        <button type="button" class="btn btn-ghost btn-block btn-sm" id="otp-verify-btn">Verify code</button>
+      </div>
+    </details>
+
+    <!-- ===== Forgot password panel (hidden until "Forgot?" is clicked) ===== -->
+    <div id="forgot-password-panel" class="panel" style="display:none; margin-top: 22px; padding: 22px;">
+      <h3 style="font-size:15px; margin-bottom:14px;">Reset your master password</h3>
+
+      <div id="forgot-step-email">
+        <div class="field">
+          <label for="forgot-email">Email address</label>
+          <input class="input" type="email" id="forgot-email" placeholder="you@domain.com" />
+        </div>
+        <button type="button" class="btn btn-primary btn-block btn-sm" id="forgot-send-btn">Send reset code</button>
+      </div>
+
+      <div id="forgot-step-reset" style="display:none;">
+        <p class="text-secondary" style="font-size:13px; margin-bottom:14px;">Enter the 6-digit code sent to your email, then choose a new password.</p>
+        <div class="otp-group" style="margin-bottom:18px;">
+          <input class="input" maxlength="1" inputmode="numeric" data-reset-otp-digit />
+          <input class="input" maxlength="1" inputmode="numeric" data-reset-otp-digit />
+          <input class="input" maxlength="1" inputmode="numeric" data-reset-otp-digit />
+          <input class="input" maxlength="1" inputmode="numeric" data-reset-otp-digit />
+          <input class="input" maxlength="1" inputmode="numeric" data-reset-otp-digit />
+          <input class="input" maxlength="1" inputmode="numeric" data-reset-otp-digit />
+        </div>
+
+        <div class="field">
+          <label for="reset-new-password">New master password</label>
+          <input class="input" type="password" id="reset-new-password" placeholder="Choose a new master password" data-strength-input="reset" />
+          <div class="strength-meter" data-strength-meter="reset">
+            <div class="strength-bar"></div><div class="strength-bar"></div><div class="strength-bar"></div><div class="strength-bar"></div>
+          </div>
+          <span class="strength-label" data-strength-label="reset">Enter a password to check its strength</span>
+        </div>
+
+        <div class="field">
+          <label for="reset-confirm-password">Confirm new password</label>
+          <input class="input" type="password" id="reset-confirm-password" placeholder="Re-enter new password" />
+        </div>
+
+        <button type="button" class="btn btn-primary btn-block btn-sm" id="reset-submit-btn">Reset password</button>
+      </div>
+
+      <button type="button" class="btn btn-ghost btn-block btn-sm" id="forgot-cancel-btn" style="margin-top:10px;">Cancel</button>
+    </div>
+
+    <p class="auth-foot">Protected by 256-bit encryption &amp; two-factor verification</p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

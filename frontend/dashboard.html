@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vault — KeyZen</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      </span>
+      KeyZen
+    </div>
+
+    <a href="dashboard.html" class="side-link active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg>
+      All entries
+    </a>
+    <a href="add.html" class="side-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>
+      Add entry
+    </a>
+    <a href="audit.html" class="side-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      Security audit
+    </a>
+
+    <div class="side-section-label">Tags</div>
+    <a href="#" class="side-link" data-sidebar-tag="Work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> Work</a>
+    <a href="#" class="side-link" data-sidebar-tag="Personal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg> Personal</a>
+    <a href="#" class="side-link" data-sidebar-tag="Finance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg> Finance</a>
+
+    <div class="sidebar-footer">
+      <div class="vault-status">
+        <span class="status-dot"></span>
+        VAULT LOCKED ON IDLE
+      </div>
+      <a href="login.html" class="side-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        Lock vault
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main-content">
+
+    <div class="page-head">
+      <div>
+        <button class="nav-toggle" aria-label="Toggle menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+        <h1 data-cipher>Your vault</h1>
+        <p class="text-secondary" id="entry-count-label">Loading...</p>
+      </div>
+      <a href="add.html" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        Add entry
+      </a>
+    </div>
+
+    <!-- Stats -->
+    <div class="stat-row">
+      <div class="panel stat-card accent">
+        <div class="stat-value" id="stat-total">–</div>
+        <div class="stat-label">Total entries</div>
+      </div>
+      <div class="panel stat-card">
+        <div class="stat-value" id="stat-strong">–</div>
+        <div class="stat-label">Strong passwords</div>
+      </div>
+      <div class="panel stat-card warn">
+        <div class="stat-value" id="stat-reused">–</div>
+        <div class="stat-label">Reused passwords</div>
+      </div>
+      <div class="panel stat-card danger">
+        <div class="stat-value" id="stat-weak">–</div>
+        <div class="stat-label">Weak passwords</div>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input class="input" type="text" placeholder="Search by site or username... (Ctrl/Cmd+K for quick jump)" data-vault-search />
+      </div>
+      <button class="filter-chip active" data-tag="All">All</button>
+      <button class="filter-chip" data-tag="Work">Work</button>
+      <button class="filter-chip" data-tag="Personal">Personal</button>
+      <button class="filter-chip" data-tag="Finance">Finance</button>
+    </div>
+
+    <!-- Vault grid -->
+    <div class="vault-grid" id="vault-grid"></div>
+
+  </main>
+</div>
+
+<!-- Delete confirmation modal (kept for markup parity; deletion is handled inline per-card with a native confirm for now) -->
+<div class="modal-overlay" id="delete-modal">
+  <div class="panel modal">
+    <div class="modal-head">
+      <h3>Delete this entry?</h3>
+      <button class="modal-close" data-close-modal="delete-modal" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <p>This removes the credential from your vault permanently. This can't be undone.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" data-close-modal="delete-modal">Cancel</button>
+      <button class="btn btn-danger-ghost" data-close-modal="delete-modal">Delete entry</button>
+    </div>
+  </div>
+</div>
+
+<!-- Command palette (Ctrl/Cmd+K) -->
+<div class="palette-overlay" id="command-palette">
+  <div class="panel palette-box">
+    <div class="palette-input-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="text" class="palette-input" id="palette-input" placeholder="Jump to a saved entry..." />
+      <span class="palette-hint">ESC</span>
+    </div>
+    <div class="palette-results" id="palette-results"></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
